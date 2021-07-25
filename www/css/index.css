@@ -1,0 +1,152 @@
+.header-logo {
+    display: none;
+}
+.group-item-title {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    padding: 0;
+    font-weight: bold;
+    margin: 0 auto;
+    font-family: "Roboto Condensed";
+    background: rgba(255, 255, 255, 0.7);
+}
+.tovar-img {
+    padding: 0px;
+    float: left;
+    width: 175px;
+    position: relative;
+}
+.tovar-item {
+    padding-left: 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+.tovar-item.active {
+    background: rgba(241, 255, 208, 0.8);
+}
+.tovar-item-content {
+    align-self: baseline !important;
+    padding: 12px 4px;
+}
+.tovar-title {
+    white-space: normal;
+    line-height: 17px;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: "Roboto Condensed";
+}
+.tovar-descr {
+    margin-bottom: 19px !important;
+    font-size: 12px;
+    white-space: normal;
+}
+.tovar-weight {
+    position: absolute;
+    right: 60px;
+    bottom: 10px;
+    font-size: 13px;
+    display: inline-block;
+    color: #fff;
+    background: #8e8e93;
+    border-radius: 20px;
+    padding: 0 6px;
+    height: 20px;
+    line-height: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.tovar-price {
+    font-size: 22px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #5d5d61;
+    position: absolute;
+    bottom: 8px;
+}
+.tovar-qty {
+    font-size: 18px;
+    text-align: center;
+    display: inline-block;
+    margin: 0px 1px;
+    color: #000;
+    width: 37px;
+}
+.page-title {
+    font-size: 21px;
+    font-weight: bold;
+}
+.plus-btn {
+    font-size: 24px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 40px;
+    background-color: #4cd964;
+    color: #fff;
+}
+.minus-btn {
+    font-size: 24px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 40px;
+    background-color: #ff3b30;
+    color: #fff;
+}
+.next-btn {
+    font-size: 16px !important;
+}
+.call-phones {
+    text-align: center;
+    padding: 10px;
+}
+a.phone-link {
+    font-size: 15px;
+    color: #ffffff !important;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 10px;
+    background: #ed462f;
+    font-family: "Roboto Condensed";
+}
+.status-5 {
+    background: url(https://express-pizza.by/sites/default/files/waiting.gif) no-repeat;
+    width: 350px;
+    height: 250px;
+    background-size: cover;
+    margin: 0 auto;
+}
+.status-1, .status-2, .status-3 {
+    background: url(https://express-pizza.by/sites/default/files/cooking.gif) no-repeat;
+    width: 350px;
+    height: 200px;
+    background-size: cover;
+    margin: 0 auto;
+}
+.status-4 {
+    background: url(https://express-pizza.by/sites/default/files/delivering.gif) no-repeat;
+    width: 350px;
+    height: 250px;
+    background-size: cover;
+    margin: 0 auto;
+}
+.status-6 {
+    background: url(https://express-pizza.by/sites/default/files/closed.gif) no-repeat;
+    width: 350px;
+    height: 270px;
+    background-size: cover;
+    margin: 0 auto;
+}
+.rtecenter {
+    text-align: center;
+}
+.status-update {
+    color: #DDDDDD;
+}

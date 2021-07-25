@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap&subset=cyrillic" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+</head>
+<body>
+<div id="app">
+    <v-app v-if="init">
+        <!-- NAVIGATION BAR -->
+        <v-navigation-drawer
+                v-model="drawer"
+                absolute
+                temporary
+                dark
+                color="red accent-4"
+        >
+            <v-list
+                    nav
+                    dense
+            >
+                <v-list-item-group
+                        v-model="group"
+                        active-class="deep-purple--text text--accent-4"
+                >
+                    <v-list-item @click="page = 'front'; drawer=false;">
+                        <v-list-item-icon>
+                            <v-icon>mdi-home</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">Меню</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="loadExternalPage(5492)">
+                        <v-list-item-icon>
+                            <v-icon>mdi-car</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">Доставка</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="page = 'cart'; title = 'Корзина'; drawer=false; ">
+                        <v-list-item-icon>
+                            <v-icon>mdi-cart-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">Корзина</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="loadExternalPage(41394)">
+                        <v-list-item-icon>
+                            <v-icon>mdi-information-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">О нас</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="loadExternalPage(41469)">
+                        <v-list-item-icon>
+                            <v-icon>mdi-phone-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">Контакты</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="loadExternalPage(66512)">
+                        <v-list-item-icon>
+                            <v-icon>mdi-format-list-bulleted</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="title">Мой заказ</v-list-item-title>
+                    </v-list-item>
+
+                </v-list-item-group>
+            </v-list>
+        </v-navigation-drawer>
+
+
+
+        <!-- HEADER FRONT PAGE -->
+            <v-app-bar
+                    v-if="page === 'front'"
+                    dense
+                    color="#ed462f"
+                    dark
+                    fixed
+            >
+                <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+                <v-toolbar-title><v-img
+                        class="header-logo"
+                        src="logo.png"
+                        max-height="49"
+                ></v-img></v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn
+                        icon
+                        @click="updateTovars(); updateGroups(); updateSlides();"
+                >
+                    <v-icon>mdi-rotate-3d-variant</v-icon>
+                </v-btn>
+            </v-app-bar>
+
+        <!-- HEADER ELSE PAGES -->
+        <v-app-bar
+                v-if="page !== 'front'"
+                dense
+                color="#ed462f"
+                dark
+                fixed
+        >
+            <v-btn icon @click="previous()">
+                <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-toolbar-title class="page-title"> {{ title }} </v-toolbar-title>
+            <v-spacer></v-spacer>
+        </v-app-bar>
+
+
+            <v-content>
+
+
+                <!-- LOADER -->
+                <v-dialog
+                        v-model="loader"
+                        hide-overlay
+                        persistent
+                        width="250"
+                >
+                    <v-card
+                            color="white"
+                            loading="red"
+                            loader-height="8"
+                    >
+                        <v-card-title>
+                            {{ loaderText }}
+                        </v-card-title>
+                    </v-card>
+                </v-dialog>
+                <!-- POPUP IMAGE -->
+                <v-dialog
+                        v-model="popup"
+                        width="500"
+                >
+                    <v-card>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                    color="red"
+                                    text
+                                    @click="popup = false"
+                            >
+                                Закрыть <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                        </v-card-actions>
+
+                        <v-img
+                                class="white--text"
+                                :src="popupImgUrl"
+                        >
+                        </v-img>
+                    </v-card>
+                </v-dialog>
+
+                <!-- CAROUSEL -->
+                <v-carousel
+                        v-if="page === 'front'"
+                        class="mt-12"
+                        cycle
+                        :show-arrows="false"
+                        hide-delimiter-background
+                        show-arrows-on-hover
+                        height="auto"
+                        style="max-height:150px"
+                        width="100%"
+                >
+                    <v-carousel-item
+                            v-for="slide in slides"
+                            :src="slide.slide.image"
+                            reverse-transition="fade-transition"
+                            transition="fade-transition"
+                    >
+                    </v-carousel-item>
+                </v-carousel>
+
+                <div
+                        class="call-phones"
+                        v-bind:class="{ 'mt-12': page!='front' }"
+                >
+                    <a href="#" onclick="window.location='tel:+375333891111'; return false;" class="external phone-link">(033)389-11-11</a>
+                    <a href="#" onclick="window.location='tel:+375445891111'; return false;" class="external phone-link">(044)589-11-11</a>
+                </div>
+
+                <!-- TERMS FRONT PAGE -->
+                <v-container
+                        fluid
+                        v-if="page === 'front'"
+                >
+                    <v-row dense>
+                        <v-col
+                                v-for="term in groups"
+                                :key="term.term.tid"
+                                cols="6"
+                        >
+                            <v-card
+                                    v-on:click="groupCode(term.term)"
+                                    flat
+                            >
+                                <v-img
+                                        :src="term.term.termimage_2x"
+                                        class="align-end"
+                                >
+                                </v-img>
+                                <v-card-title class="group-item-title" v-text="term.term.name"></v-card-title>
+                            </v-card>
+                        </v-col>
+
+                        <v-col cols="6">
+                            <v-card @click="loadExternalPage(66512)" flat>
+                                <v-img
+                                        src="https://express-pizza.by/sites/default/files/my_order.jpg"
+                                        class="align-end"
+                                >
+                                </v-img>
+                                <v-card-title class="group-item-title">Мой заказ</v-card-title>
+                            </v-card>
+                        </v-col>
+
+                    </v-row>
+                </v-container>
+
+                <!-- TOVARS PAGE -->
+                        <v-list
+                                v-if="page === 'tovars'"
+                                three-line
+                                width="100%"
+                        >
+                            <template v-for="node in tovars">
+                                <v-list-item
+                                        v-if="node.node.term == termCode"
+                                        :key="node.node.nid"
+                                        v-bind:class="{ active: cart[node.node.nid] }"
+                                        @click=""
+                                        class="tovar-item"
+                                >
+                                    <span  class="tovar-img">
+                                        <v-img
+                                                @click="popupImg(node.node.image2x)"
+                                                :src="node.node.image2x"
+                                        ></v-img>
+                                    </span>
+
+                                    <v-list-item-content class="tovar-item-content">
+                                        <div class="tovar-title" v-html="node.node.title"></div>
+                                        <div class="tovar-descr" v-html="node.node.text"></div>
+                                        <span class="tovar-price" v-html="moneyFormat(node.node.price)"></span>
+                                        <span class="tovar-weight" v-if="node.node.ves" v-html="node.node.ves"></span>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action class="ml-1 mt-2 mb-2">
+                                        <span class="plus-btn flat dark" @click="addTovar(node.node)" >
+                                            +
+                                        </span>
+                                        <span class="tovar-qty" v-if="cart[node.node.nid]">
+                                            {{ cart[node.node.nid].qty }}
+                                        </span>
+                                        <span class="tovar-qty" v-else>0</span>
+                                        <span class="minus-btn flat dark" @click="removeTovar(node.node)" >
+                                            -
+                                        </span>
+                                    </v-list-item-action>
+
+                                </v-list-item>
+                            </template>
+                        </v-list>
+
+                <!-- CART PAGE -->
+                <v-list
+                        v-if="page === 'cart'"
+                        three-line
+                        width="100%"
+                >
+                    <template v-for="node in cart">
+                        <v-list-item
+                                :key="node.nid"
+                                @click=""
+                        >
+
+                            <v-list-item-content class="tovar-item-content">
+                                <div class="tovar-title" v-html="node.title"></div>
+                                <div class="tovar-descr" v-html="node.text"></div>
+                                <span class="tovar-price" v-html="moneyFormat(node.price)"></span>
+                                <span class="tovar-weight" v-if="node.ves" v-html="node.ves"></span>
+                            </v-list-item-content>
+
+                            <v-list-item-action class="ml-1 mt-2 mb-2">
+                                        <span class="plus-btn flat dark" @click="addTovar(node)" >
+                                            +
+                                        </span>
+                                <span class="tovar-qty" v-if="cart[node.nid]">
+                                            {{ cart[node.nid].qty }}
+                                        </span>
+                                <span class="tovar-qty" v-else>0</span>
+                                <span class="minus-btn flat dark" @click="removeTovar(node)" >
+                                            -
+                                        </span>
+                            </v-list-item-action>
+
+                        </v-list-item>
+                    </template>
+                    <v-list-item
+                            v-if="total==0"
+                    >
+                        <v-list-item-content>
+                            <v-list-item-title>Ваша корзина пуста</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                </v-list>
+
+                <!-- CHECKOUT PAGE -->
+                    <template v-if="page === 'checkout'" >
+                            <v-form
+                                    class="mx-auto"
+                                    ref="form"
+                            >
+                                <v-container>
+                                    <v-row>
+
+                                        <v-col cols="12" sm="6" md="3">
+                                            <div >
+                                                {{ qty }} товаров на {{ total | currency }}р
+                                            </div>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Имя"
+                                                    dense
+                                                    v-model="form.name"
+                                                    :rules="[rules.required]"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Телефон"
+                                                    dense
+                                                    v-model="form.tel"
+                                                    :rules="[rules.phone]"
+                                                    v-mask="'+375(##)###-##-##'"
+                                                    placeholder="+375(__)___-__-__"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Улица"
+                                                    dense
+                                                    v-model="form.adres"
+                                                    :rules="[rules.required]"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Дом"
+                                                    dense
+                                                    v-model="form.house_num"
+                                                    :rules="[rules.required]"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Корпус"
+                                                    dense
+                                                    v-model="form.korpus"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Квартира/офис"
+                                                    dense
+                                                    v-model="form.kvartira"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field
+                                                    label="Примечание"
+                                                    dense
+                                                    v-model="form.primechanie"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-form>
+                    </template>
+
+                <!-- COMPLETE PAGE -->
+                <template v-if="page === 'complete'" >
+                    <v-form class="mx-auto" >
+                        <v-container>
+                            <v-row>
+
+                                <v-col cols="12" sm="6" md="3">
+                                    <div class="text-center title" v-html="msg">
+
+                                    </div>
+                                </v-col>
+
+                            </v-row>
+                        </v-container>
+                    </v-form>
+                </template>
+
+                <!-- EXTERNAL PAGE -->
+                <template v-if="page === 'externalpage'" >
+                    <v-form class="mx-auto" >
+                        <v-container>
+                            <v-row>
+
+                                <v-col cols="12" sm="6" md="3">
+                                    <div v-html="body">
+
+                                    </div>
+                                </v-col>
+
+                            </v-row>
+                        </v-container>
+                    </v-form>
+                </template>
+                <!-- PAGE -->
+
+                </v-content>
+
+        <!-- FOOTER  -->
+            <v-footer
+                    v-if="page !== 'checkout' && page !== 'complete'"
+                    dark
+                    padless
+                    color="#ed462f"
+                    fixed
+
+            >
+                <v-btn icon>
+                    <v-icon>mdi-cart</v-icon>
+                </v-btn>
+                <div class="title" v-if="total == 0">
+                    Ваша корзина пуста
+                </div>
+                <div class="title" v-else>
+                    {{ total | currency }}р
+                </div>
+                <v-spacer></v-spacer>
+                <v-btn
+                        v-if="total>0"
+                        @click="next()"
+                        text
+                        class="next-btn"
+                >
+                    Далее <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+            </v-footer>
+
+        <!-- FOOTER CHECKOUT  -->
+        <v-footer
+                v-if="page == 'checkout'"
+                dark
+                padless
+                color="#ed462f"
+                fixed
+
+        >
+            <v-btn
+                    block
+                    @click="sendOrder()"
+                    color="#4cd964"
+            >
+                Отправить
+            </v-btn>
+        </v-footer>
+
+    </v-app>
+</div>
+<!--   ----------------------------------------------------------------------------------------------   -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js" integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
