@@ -18,16 +18,36 @@
   <allow-navigation href="*"/>
   <platform name="android">
     <allow-intent href="market:*"/>
+    <icon src="/res/android/icon/ldpi.png" density="ldpi"/>
+    <icon src="/res/android/icon/mdpi.png" density="mdpi"/>
+    <icon src="/res/android/icon/hdpi.png" density="hdpi"/>
+    <icon src="/res/android/icon/xhdpi.png" density="xhdpi"/>
+    <icon src="/res/android/icon/xxhdpi.png" density="xxhdpi"/>
+    <icon src="/res/android/icon/xxxhdpi.png" density="xxxhdpi"/>
+    <splash src="/res/android/screen/splash-port-ldpi.png" density="port-ldpi"/>
+    <splash src="/res/android/screen/splash-port-mdpi.png" density="port-mdpi"/>
+    <splash src="/res/android/screen/splash-port-hdpi.png" density="port-hdpi"/>
+    <splash src="/res/android/screen/splash-port-xhdpi.png" density="port-xhdpi"/>
+    <splash src="/res/android/screen/splash-port-xxhdpi.png" density="port-xxhdpi"/>
+    <splash src="/res/android/screen/splash-mdpi.png" density="mdpi"/>
+    <splash src="/res/android/screen/splash-port-xxxhdpi.png" density="port-xxxhdpi"/>
     <preference name="AndroidXEnabled" value="false"/>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <preference name="BackupWebStorage" value="none"/>
+    <icon src="/res/ios/icon/icon.png" width="57" height="57"/>
+    <icon src="/res/ios/icon/icon@2x.png" width="114" height="114"/>
+    <icon src="/res/ios/icon/icon-72.png" width="72" height="72"/>
+    <icon src="/res/ios/icon/icon-72@2x.png" width="144" height="144"/>
+    <icon src="/res/ios/icon/icon-50.png" width="50" height="50"/>
+    <icon src="/res/ios/icon/icon-50@2x.png" width="100" height="100"/>
+    <icon src="/res/ios/icon/icon-20.png" width="20" height="20"/>
+    <splash src="/res/ios/screen/Default-Portrait~ipad.png" width="768" height="1024"/>
+    <splash src="/res/ios/screen/Default-Landscape-736h.png" width="2208" height="1242"/>
   </platform>
   <preference name="StatusBarBackgroundColor" value="#FFFFFF"/>
-  <preference name="AutoHideSplashScreen" value="true"/>
-  <preference name="EnableViewportScale" value="true"/>
   <icon src="icon.png"/>
   <splash src="splash.png"/>
   <platform name="ios">
@@ -61,32 +81,37 @@
     <splash src="res/screen/ios/Default-736h.png" width="1242" height="2208"/>
     <!--  <splash src="res/screen/ios/Default-Landscape-736h.png" width="2208" height="1242"/>  -->
   </platform>
-   <platform name="android">
-  <icon src="ldpi.png" qualifier="ldpi"/>
-  <icon src="mdpi.png"  qualifier="mdpi"/>
-  <icon src="hdpi.png" qualifier="hdpi"/>
-  <icon src="xhdpi.png"  qualifier="xhdpi"/>
-  <icon src="xxhdpi.png"  qualifier="xxhdpi"/>
-  <icon src="fr-xxhdpi.png" qualifier="fr-xxhdpi"/>
-  <splash src="screen-ldpi-portrait.png"  qualifier="port-ldpi"/>
-  <splash src="screen-mdpi-portrait.png"  qualifier="port-mdpi"/>
-  <splash src="screen-hdpi-portrait.png"  qualifier="port-hdpi"/>
-  <splash src="screen-xhdpi-portrait.png"  qualifier="port-xhdpi"/>
-  <splash src="screen-ldpi-landscape.png"  qualifier="land-ldpi"/>
-  <splash src="screen-mdpi-landscape.png"  qualifier="land-mdpi"/>
-  <splash src="screen-hdpi-landscape.png"  qualifier="land-hdpi"/>
-  <splash src="screen-xhdpi-landscape.png"  qualifier="land-xhdpi"/>
+  <platform name="android">
+    <icon src="ldpi.png" qualifier="ldpi"/>
+    <icon src="mdpi.png" qualifier="mdpi"/>
+    <icon src="hdpi.png" qualifier="hdpi"/>
+    <icon src="xhdpi.png" qualifier="xhdpi"/>
+    <icon src="xxhdpi.png" qualifier="xxhdpi"/>
+    <icon src="fr-xxhdpi.png" qualifier="fr-xxhdpi"/>
+    <splash src="screen-ldpi-portrait.png" qualifier="port-ldpi"/>
+    <splash src="screen-mdpi-portrait.png" qualifier="port-mdpi"/>
+    <splash src="screen-hdpi-portrait.png" qualifier="port-hdpi"/>
+    <splash src="screen-xhdpi-portrait.png" qualifier="port-xhdpi"/>
+    <splash src="screen-ldpi-landscape.png" qualifier="land-ldpi"/>
+    <splash src="screen-mdpi-landscape.png" qualifier="land-mdpi"/>
+    <splash src="screen-hdpi-landscape.png" qualifier="land-hdpi"/>
+    <splash src="screen-xhdpi-landscape.png" qualifier="land-xhdpi"/>
   </platform>
   <preference name="WindowsStorePublisherName" value="My Name"/>
   <preference name="WindowsStoreIdentityName" value="42e2b322-6752-9d9a-4f36-5b8bd09ce8c4"/>
+  <preference name="KeepRunning" value="false"/>
+  <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
+  <preference name="Orientation" value="portrait"/>
+  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="Fullscreen" value="false"/>
+  <preference name="target-device" value="handset"/>
+  <preference name="AutoHideSplashScreen" value="true"/>
+  <preference name="FadeSplashScreen" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
   <access origin="*"/>
   <access origin="https://express-pizza.by"/>
   <access origin="https://express-pizza.by/groupjson"/>
   <access origin="http://express-pizza.by"/>
-  <preference name="KeepRunning" value="false"/>
-  <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
-  <preference name="DisallowOverscroll" value="false"/>
-  <preference name="Orientation" value="portrait"/>
-  <preference name="SplashScreenDelay" value="1000"/>
-  <preference name="Fullscreen" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="EnableViewportScale" value="true"/>
 </widget>
