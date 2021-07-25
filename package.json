@@ -14,7 +14,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^9.1.0",
-    "cordova-ios": "^6.2.0",
+
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-hidden-statusbar-overlay": "https://github.com/katzer/cordova-plugin-hidden-statusbar-overlay",
     "cordova-plugin-splashscreen": "~3.1.0",
