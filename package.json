@@ -1,37 +1,14 @@
 {
-    "name": "by.express_pizza.express_pizza",
-    "displayName": "Express Pizza",
-    "version": "3.0.1",
-    "description": "Доставка пиццы на дом и в офис в Минске. Пиццы, салаты, соки и напитки.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "monaca:preview": "npm run dev",
-        "dev": "browser-sync start -s www/ --watch --port 8080 --ui-port 8081"
-    },
-    "keywords": [
-        "ecosystem:cordova"
-    ],
-    "author": "Express Pizza",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "browser-sync": "^2.24.5",
-        "cordova": "^10.0.0"
-    },
     "cordova": {
         "plugins": {
             "cordova-plugin-device": {},
-            "cordova-plugin-splashscreen": {},
-            "cordova-plugin-statusbar": {}
-        },
-        "platforms": [
-            "android",
-            "ios"
-        ]
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-splashscreen": {}
+        }
     },
     "dependencies": {
         "cordova-plugin-device": "2.0.3",
-        "cordova-plugin-splashscreen": "6.0.0",
-        "cordova-plugin-statusbar": "2.4.3"
+        "cordova-plugin-statusbar": "2.4.3",
+        "cordova-plugin-splashscreen": "6.0.0"
     }
 }

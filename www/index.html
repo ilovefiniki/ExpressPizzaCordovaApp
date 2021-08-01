@@ -89,7 +89,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                         icon
-                        @click="updateTovars(); updateGroups(); updateSlides();"
+                        @click="updateTovars(); updateGroups(); updateSlides(); updateDiscount();"
                 >
                     <v-icon>mdi-rotate-3d-variant</v-icon>
                 </v-btn>
@@ -323,10 +323,14 @@
 
                                         <v-col cols="12" sm="6" md="3">
                                             <div >
-                                                {{ qty }} товаров на {{ total | currency }}р
+                                                {{ qty }} товаров на <b>{{ total | currency }}р</b>
                                             </div>
                                         </v-col>
-
+                                        <v-col v-if="discount" cols="12" sm="6" md="3">
+                                            <div >
+                                                Итого со скидкой {{ discount }}%: <b>{{ totalDiscount | currency }}р</b>
+                                            </div>
+                                        </v-col>
                                         <v-col cols="12" sm="6" md="3">
                                             <v-text-field
                                                     label="Имя"

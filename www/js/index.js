@@ -5,19 +5,22 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
-    StatusBar.overlaysWebView(false);
-    StatusBar.backgroundColorByHexString('#ed462f');
-    StatusBar.show();
+    //StatusBar.overlaysWebView(false);
+    //StatusBar.backgroundColorByHexString('#ed462f');
+    //StatusBar.show();
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
     iOSStatusBar();
 }
 
 function iOSStatusBar() {
+alert('f');
+document.getElementById('app').classList.add('header-no-img');
     if(device.platform === 'iOS') {
-        if(device.version >= 11) {
-            document.getElementById('app').classList.add('header-no-img');
-        }
+        //if(device.version >= 11) {
+            
+            
+       // }
     }
 }
 
@@ -39,6 +42,8 @@ new Vue({
         title: null,
         cart: {},
         total: 0,
+        totalDiscount: 0,
+        discount: 0,
         qty: 0,
         form: {},
         msg: null,
@@ -60,6 +65,8 @@ new Vue({
         this.updateTovars();
         this.updateGroups();
         this.updateSlides();
+        this.updateDiscount();
+        console.log(device.version);
     },
     filters: {
         currency (value) {
@@ -107,6 +114,16 @@ new Vue({
                     this.slides = response.data.Items;
                     this.loader = false;
                     setTimeout(obj.updateSlides, 1800000);
+                });
+        },
+        updateDiscount: function () {
+            var obj = this;
+            axios
+                .get('https://express-pizza.by/discountjson')
+                .then((response) => {
+                    console.log('Discount updated');
+                    this.discount = response.data.Items[0].node.discount;
+                    setTimeout(obj.updateDiscount, 1800000);
                 });
         },
         popupImg: function(img) {
@@ -162,6 +179,9 @@ new Vue({
                 if ( this.cart.hasOwnProperty(nid) ) {
                     this.total += this.cart[nid].price*this.cart[nid].qty;
                     this.qty += this.cart[nid].qty;
+                }
+                if(this.discount) {
+                    this.totalDiscount = this.total - (this.total*this.discount/100);
                 }
             }
         },
