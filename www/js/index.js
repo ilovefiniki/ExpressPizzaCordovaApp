@@ -39,6 +39,8 @@ new Vue({
         title: null,
         cart: {},
         total: 0,
+        totalDiscount: 0,
+        discount: 0,
         qty: 0,
         form: {},
         msg: null,
@@ -60,6 +62,7 @@ new Vue({
         this.updateTovars();
         this.updateGroups();
         this.updateSlides();
+        this.updateDiscount();
     },
     filters: {
         currency (value) {
@@ -107,6 +110,16 @@ new Vue({
                     this.slides = response.data.Items;
                     this.loader = false;
                     setTimeout(obj.updateSlides, 1800000);
+                });
+        },
+        updateDiscount: function () {
+            var obj = this;
+            axios
+                .get('https://express-pizza.by/discountjson')
+                .then((response) => {
+                    console.log('Discount updated');
+                    this.discount = response.data.Items[0].node.discount;
+                    setTimeout(obj.updateDiscount, 1800000);
                 });
         },
         popupImg: function(img) {
@@ -162,6 +175,9 @@ new Vue({
                 if ( this.cart.hasOwnProperty(nid) ) {
                     this.total += this.cart[nid].price*this.cart[nid].qty;
                     this.qty += this.cart[nid].qty;
+                }
+                if(this.discount) {
+                    this.totalDiscount = this.total - (this.total*this.discount/100);
                 }
             }
         },
